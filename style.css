@@ -1,35 +1,27 @@
 body {
     font-family: "Arial", sans-serif;
-    color: #333333;
+    background-color: antiquewhite;
+    color: #333;
     line-height: 1.6;
     padding: 20px;
 }
 
-#commentForm{
-    background-color: bisque;
-    height: 150px;
+#commentForm {
     width: 60%;
-    border-radius: 10px;
-}
-
-#commentForm:hover{
-    border: 2px solid black;
-
+    height: 120px;
 }
 
 #commentForm textarea {
-    width: 100%;
-    max-width: 600px;
-    height: 100px;
+    width: 85%;
+    height: 70px;
     margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 5px;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
     border: 1px solid #ccc;
     resize: none;
-    position: relative;
-    left: 10px;
-    top: 10px;
 }
 
 #commentForm button {
@@ -41,25 +33,36 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    position: relative;
-    left: 10px;
-    top: 10px; 
 }
 
 #commentForm button:hover {
     background-color: #003d73;
 }
 
-.repliesContainermain,
+.deletebtn {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 1.8em;
+    transition: background-color 0.3s;
+    font-size: small;
+}
+
 .reply {
     background-color: #ffffff;
     margin: 10px 0;
     padding: 20px;
     border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
 }
 
+.repliesContainer textarea {
+    width: 70%;
+}
 
-.repliesContainermain .replyBtn,
+.repliesContainer .replyBtn,
 .comment .toggleReplies {
     margin-top: 10px;
     background-color: #007bff;
@@ -69,53 +72,118 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    height: 1.8em;
+    font-size: small;
 }
 
-.repliesContainermain .replyBtn:hover,
+.deletebtn:hover {
+    background-color: #0056b3;
+}
+
+.repliesContainer .replyBtn:hover,
 .comment .toggleReplies:hover {
     background-color: #0056b3;
 }
 
-.repliesContainermain {
-    margin-top: 20px;
-    border: 1px solid black;
-}
-
 .replyInput {
     width: 100%;
+    height: 2rem;
     margin-top: 10px;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
     border: 1px solid #ccc;
-    resize: vertical;
-    display: none;
-    cursor: pointer;
-
-    /* Initially hide the reply input */
+    resize: none;
+    display: block;
 }
 
-.repliesContainermain .replyInput {
-    display: flex;
-    /* Show reply input on comment hover */
-}
-
-.collapsed {
-    display: none;
-}
-
-.repliesContainermain {
+.repliesContainer {
     padding-left: 1rem;
+    border-left: 3px;
     margin-left: 10%;
+    height: 60%;
 }
 
-#deletebtn{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 15px;
+p {
+    height: 2rem;
+    border-radius: 3px;
+    overflow: auto;
+    width: 60%;
 }
 
-.delete{
-    background-color: gainsboro;
+.toggleRepliesBtn {
+    border-radius: 4px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggleRepliesBtn:hover {
+    background-color: honeydew;
+}
+
+.repliedcomments {
+    width: 70%;
+    background-color: rgb(144, 199, 201);
+}
+
+/* Media Queries */
+
+/* Tablet */
+@media (max-width: 768px) {
+    #commentForm {
+        width: 80%;
+    }
+
+    #commentForm textarea {
+        width: 100%;
+    }
+
+    .repliesContainer {
+        margin-left: 5%;
+    }
+
+    p {
+        width: 80%;
+    }
+
+    .toggleRepliesBtn {
+        width: 100%;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    #commentForm {
+        width: 100%;
+    }
+
+    #commentForm textarea {
+        width: 100%;
+    }
+
+    #commentForm button {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .deletebtn,
+    .repliesContainer .replyBtn,
+    .comment .toggleReplies {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .repliesContainer {
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+    p {
+        width: 100%;
+    }
 }
