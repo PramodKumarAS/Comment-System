@@ -1,0 +1,121 @@
+body {
+    font-family: "Arial", sans-serif;
+    color: #333333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+#commentForm{
+    background-color: bisque;
+    height: 150px;
+    width: 60%;
+    border-radius: 10px;
+}
+
+#commentForm:hover{
+    border: 2px solid black;
+
+}
+
+#commentForm textarea {
+    width: 100%;
+    max-width: 600px;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+    position: relative;
+    left: 10px;
+    top: 10px;
+}
+
+#commentForm button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #005a9c;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 10px;
+    top: 10px; 
+}
+
+#commentForm button:hover {
+    background-color: #003d73;
+}
+
+.repliesContainermain,
+.reply {
+    background-color: #ffffff;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+
+.repliesContainermain .replyBtn,
+.comment .toggleReplies {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.repliesContainermain .replyBtn:hover,
+.comment .toggleReplies:hover {
+    background-color: #0056b3;
+}
+
+.repliesContainermain {
+    margin-top: 20px;
+    border: 1px solid black;
+}
+
+.replyInput {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    display: none;
+    cursor: pointer;
+
+    /* Initially hide the reply input */
+}
+
+.repliesContainermain .replyInput {
+    display: flex;
+    /* Show reply input on comment hover */
+}
+
+.collapsed {
+    display: none;
+}
+
+.repliesContainermain {
+    padding-left: 1rem;
+    margin-left: 10%;
+}
+
+#deletebtn{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.delete{
+    background-color: gainsboro;
+}
