@@ -1,44 +1,84 @@
 document.addEventListener('DOMContentLoaded',(e)=>{
+
+    const commentContainer  = document.querySelector('#commentsContainer');
     const submitBtn  = document.querySelector('#submitComment');
     const commentTxt  = document.querySelector('#commentInput');
-    const commentContainer  = document.querySelector('#commentsContainer');
-
+   
     //#region EVENT LISTENERS
+
+    //EVENT 1:When User Mouse over on Comment button change the Comment button visibiliy(cursor,backgroundcolor,opacity)
+    submitBtn.addEventListener('mouseover', () => {
+        submitBtn.style.cursor = commentTxt.value ? "pointer" : "not-allowed";
+        submitBtn.style.backgroundColor  = commentTxt.value ? "rgb(80, 210, 37)":"";
+        submitBtn.style.opacity  = commentTxt.value ? "1" : "0.5";
+    });
+
+    //EVENT 2:When User starts entering comment change the Comment button visibiliy(backgroundcolor,opacity)
+    commentTxt.addEventListener('input', () => {
+        submitBtn.style.backgroundColor  = commentTxt.value ? "rgb(80, 210, 37)":"";
+        submitBtn.style.opacity  = commentTxt.value ? "1" : "0.5";
+    });
+
+    //EVENT 3:When User Click on comment button new comment should be added (without entering anything empty comment should not post)
+    //Then remove the entered input from the text area and bring back the comment button to origin state.
     submitBtn.addEventListener('click',()=>{
         comment = commentTxt.value;
+
         if(comment){
+
             addComment(comment);
 
             commentTxt.value="";
+            submitBtn.style.backgroundColor  = commentTxt.value ? "rgb(80, 210, 37)":"";
+            submitBtn.style.opacity  = commentTxt.value ? "1" : "0.5";    
         }
     });
 
-    commentContainer.addEventListener('click',(e)=>{
+
+    //EVENT 4:Show/Hide the replay area based on reply button
+    commentContainer.addEventListener('click', (e) => {
         const currElement = e.target;
-
-        if(currElement.classList.contains('replyBtn')){
+    
+        if (currElement.classList.contains('replyBtn')) {
             const parentEle = currElement.parentElement;
-            const replyComment = parentEle.querySelector('.replyInput');
-             const nestedContainers = parentEle.querySelectorAll('.repliesContainer');
-
-                comment = replyComment.value;
-                if(comment){
-                    replyComments(parentEle,comment,nestedContainers.length);
-                    replyComment.value="";
-                }
+            const replyInput = parentEle.querySelector('.replyContainer');
+    
+            if (replyInput.style.display === 'none' || !replyInput.style.display) {
+                replyInput.style.display = 'flex'; 
+            } else {
+                replyInput.style.display = 'none'; 
+            }
         }
     });
+    
+    //EVENT 5:When user clicks on reply buton comments should be added
+    commentContainer.addEventListener('click', (e) => {
+        const currElement = e.target;
+    
+        if (currElement.id === 'replysubmitComment') {
 
+            const parentEle = currElement.parentElement.parentElement;
+            const replyInput = parentEle.querySelector('.replyInput');
+
+            if(replyInput.value){
+                replyComments(parentEle,replyInput.value);
+                replyInput.value="";
+            }
+        }
+    });
+    
+    //EVENT 6:When user clicks on delete button particular comment should be removed
     commentContainer.addEventListener('click',(e)=>{
         const currElement = e.target;
         
-        if(currElement.classList.contains('deletebtn')){
+        if(currElement.classList.contains('deleteComment')){
             const parentEle = currElement.parentElement;
-            let nestedContainers = parentEle.querySelectorAll('.repliesContainer'); 
-            let count=nestedContainers.length;
-            removeComment(parentEle,count);
+
+            removeComment(parentEle);
         }
     });
+
+    //EVENT 7:When click Show/Hide replies button replied comments should be shown /hidden
     commentContainer.addEventListener('click', (e) => {
         const currElement = e.target;
     
@@ -48,144 +88,105 @@ document.addEventListener('DOMContentLoaded',(e)=>{
         }
     });
     
-
+    //EVENT 8:When user clicks on more option button delete button should disply
     commentContainer.addEventListener('click',(e)=>{
         const currElement = e.target;
 
-        if(currElement.classList.contains('likeBtn')){
-            let count=parseInt(currElement.nextElementSibling.textContent);
+        if(currElement.classList.contains('dots')){
+            const parentEle = currElement.parentElement;
+            const deletButton = parentEle.querySelector(".deleteComment");
 
-            likefunc(currElement,count);
-        }
-    });
-
-    commentContainer.addEventListener('click',(e)=>{
-        const currElement = e.target;
-
-        if(currElement.classList.contains('dislikeBtn')){
-            let count=parseInt(currElement.nextElementSibling.textContent);
-
-            dislikefunc(currElement,count);
+            if(deletButton.style.display==='none' || !deletButton.style.display){
+                deletButton.style.display='inline-block';
+            }else{
+                deletButton.style.display='none';
+            }
         }
     });
 
 //#endregion
 
     //#region FUNCTIONS
-    function showReplies(parentEle) {
-        const nestedContainers = parentEle.querySelectorAll('.repliesContainer');
-        const toggleBtn = parentEle.querySelector('.toggleRepliesBtn'); 
-    
-        // Check if any nested containers are currently visible
-        const anyVisible = Array.from(nestedContainers).some(nestedContainer => 
-            nestedContainer.style.display === 'block');
-    
-        nestedContainers.forEach(nestedContainer => {
-            // Toggle the display of the specific nested container
-            if (anyVisible) {
-                nestedContainer.style.display = 'none'; // Collapse
-            } else {
-                nestedContainer.style.display = 'block'; // Expand
-            }
-        });
-    
-        // Update the toggle button text based on visibility state
-        toggleBtn.textContent = anyVisible ? 'Show Replies' : 'Hide Replies';
-    }      
-
-    function likefunc(currElement,count){
-
-        let isLiked =true;
-
-        if(isLiked){
-            count++;
-            const likec = currElement.parentElement.querySelector(".likeCount");
-            likec.textContent=`${count} Likes`;
-        }
-
-        else{
-            count--;
-            const likec = currElement.parentElement.querySelector(".likeCount");
-            likec.textContent=count;
-        }
-
-        isLiked!=isLiked;
-    }
-
-    function dislikefunc(currElement,count){
-
-        let isDisLiked =true;
-
-        if(isDisLiked){
-            count++;
-            const likec = currElement.parentElement.querySelector(".dislikeCount");
-            likec.textContent=`${count} DisLikes`;
-        }
-
-        else{
-            count--;
-            const likec = currElement.parentElement.querySelector(".likeCount");
-            likec.textContent=`${count} DisLikes`;
-        }
-
-        isDisLiked!=isDisLiked;
-    }
-
-    function removeComment(comment,commentsCount){
-        let count =comment.parentElement.querySelector(".commentsCount").textContent;
-        count--;
-        comment.remove();
-        comment.parentElement.querySelector(".commentsCount").textContent = `comments ${count}`;
-    }
-    
     function addComment(comment){
         const commentElement=document.createElement('div');
         commentElement.classList.add('repliesContainer');
 
         commentElement.innerHTML = `        
                                     <div class="repliedcomments">
-                                    <p>${comment}    </p>
-                                        <button class="likeBtn">👍</button>
-                                        <span class="likeCount">0 Likes</span>    
-                                        <button class="dislikeBtn">👎</button> 
-                                        <span class="dislikeCount">0 DisLikes</span>
+                                      <div class="userDetail">
+                                        <img src="https://assets.leetcode.com/users/Pramod_18/avatar_1726803350.png" alt="">
+                                        <a>user_${Math.floor(1000 + Math.random() * 9000)}</a>
+                                      </div>
+                                        <p>${comment}</p>                                                                               
                                     </div>
-
-                                    <textarea class="replyInput" placeholder="Write a reply..."></textarea>
-                                    <button class="deletebtn">Delete</button>
-                                    <button class="toggleRepliesBtn">Hide Replies</button> <!-- Toggle button -->
-                                    <button class="commentsCount">comments</button>
+                                    <button class="toggleRepliesBtn">Hide Comments</button>
                                     <button class="replyBtn">Reply</button>
+                                    <button class="dots" id="moreOptions">...</button>
+                                    <button class="deleteComment">Delete</button>           
 
+                                    <div class="replyContainer">
+                                        <img src="https://assets.leetcode.com/users/Pramod_18/avatar_1726803350.png" alt="">
+                                        <textarea class="replyInput" placeholder="Write a reply..."></textarea>
+                                        <button id="replysubmitComment">Comment</button>
+                                    </div>
                                  `;
 
         commentContainer.appendChild(commentElement);
     }
 
-    function replyComments(parentElement,comment,commentsCount){
+    function replyComments(parentElement,comment){
         const commentElement=document.createElement('div');
         commentElement.classList.add('repliesContainer');
 
         commentElement.innerHTML = `        
                                     <div class="repliedcomments">
-                                    <p>${comment}    </p>
-                                        <button class="likeBtn">👍</button>
-                                        <span class="likeCount">0 Likes</span>    
-                                        <button class="dislikeBtn">👎</button> 
-                                        <span class="dislikeCount">0 DisLikes</span>
+                                      <div class="userDetail">
+                                        <img src="https://assets.leetcode.com/users/Satansoft/avatar_1711147331.png" alt="">
+                                        <a>user_${Math.floor(1000 + Math.random() * 9000)}</a>
+                                      </div>
+                                        <p>${comment}</p>
                                     </div>
                                 
-
-                                    <textarea class="replyInput" placeholder="Write a reply..."></textarea>
-                                    <button class="deletebtn">Delete</button>
-                                    <button class="toggleRepliesBtn">Hide Replies</button> <!-- Toggle button -->
-                                    <button class="commentsCount">comments</button>
+                                    
+                                    <button class="toggleRepliesBtn">Hide Comments</button> 
                                     <button class="replyBtn">Reply</button>
+                                    <button class="dots" id="moreOptions">...</button>
+                                    <button class="deleteComment">Delete</button>          
+                                    <div class="replyContainer">
+                                        <img src="https://assets.leetcode.com/users/Pramod_18/avatar_1726803350.png" alt="">
+                                        <textarea class="replyInput" placeholder="Write a reply..."></textarea>
+                                        <button id="replysubmitComment">Comment</button>
+                                    </div>
                                  `;
-
         parentElement.appendChild(commentElement);
-
-        parentElement.querySelector(".commentsCount").textContent = `comments ${commentsCount}`;
     }
+
+    function showReplies(parentEle) {
+        const nestedContainers = parentEle.querySelectorAll('.repliesContainer');
+        const toggleBtn = parentEle.querySelector('.toggleRepliesBtn'); 
+      
+        if(nestedContainers.length===0){
+            alert("No Replies to Hide!!!!!")
+        }
+
+        const anyVisible = Array.from(nestedContainers)
+                                .some(nestedContainer => 
+                                    nestedContainer.style.display === 'block' || !nestedContainer.style.display 
+                                );
+    
+        nestedContainers.forEach(nestedContainer => {
+            if (anyVisible) {
+                nestedContainer.style.display = 'none'; 
+            } else {
+                nestedContainer.style.display = 'block'; 
+            }
+        });
+    
+        toggleBtn.textContent = anyVisible ? 'Show Comments' : 'Hide Comments';
+    }      
+
+    function removeComment(comment){
+        comment.remove();
+    }    
     //#endregion
 })

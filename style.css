@@ -1,102 +1,57 @@
+/* Body style-------------------------------------------------------------------------------------------------------------------- */
 body {
     font-family: "Arial", sans-serif;
-    background-color: antiquewhite;
+    background-color: rgb(38 38 38);
     color: #333;
     line-height: 1.6;
     padding: 20px;
 }
 
+
+/* commentForm style--------------------------------------------------------------------------------------------------------------*/
 #commentForm {
     width: 60%;
-    height: 120px;
+    height: 150px;
 }
 
 #commentForm textarea {
-    width: 85%;
-    height: 70px;
+    width: 60%;
+    height: 100px;
     margin-bottom: 10px;
     margin-top: 10px;
     margin-left: 5px;
     padding: 10px;
     box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius:12px;
     resize: none;
+    background-color: rgb(67, 65, 65);
+    border: none; 
+    color: white;
+    outline: none;
 }
 
 #commentForm button {
+    height: 30px;
+    width: 80px;
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #005a9c;
+    background-color: rgb(80, 210, 126);
     color: #ffffff;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 7px;
+    cursor: not-allowed;
     transition: background-color 0.3s;
+    opacity: 0.5;
+    text-align: center;
+    font-family: 'Arial', sans-serif; 
+    font: initial;
 }
 
 #commentForm button:hover {
-    background-color: #003d73;
+    background-color: rgb(83, 233, 135);
 }
 
-.deletebtn {
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    height: 1.8em;
-    transition: background-color 0.3s;
-    font-size: small;
-}
 
-.reply {
-    background-color: #ffffff;
-    margin: 10px 0;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
-}
-
-.repliesContainer textarea {
-    width: 70%;
-}
-
-.repliesContainer .replyBtn,
-.comment .toggleReplies {
-    margin-top: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    height: 1.8em;
-    font-size: small;
-}
-
-.deletebtn:hover {
-    background-color: #0056b3;
-}
-
-.repliesContainer .replyBtn:hover,
-.comment .toggleReplies:hover {
-    background-color: #0056b3;
-}
-
-.replyInput {
-    width: 100%;
-    height: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    resize: none;
-    display: block;
-}
-
+/* repliesContainer style-----------------------------------------------------------------------------------------------------------*/
 .repliesContainer {
     padding-left: 1rem;
     border-left: 3px;
@@ -104,30 +59,139 @@ body {
     height: 60%;
 }
 
+.repliedcomments {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    background-color: rgb(67, 65, 65);
+    border-radius: 10px;
+    color: whitesmoke;
+    margin-top: 5px;
+}
+
+.userDetail{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
+img{
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+}
+
 p {
     height: 2rem;
     border-radius: 3px;
     overflow: auto;
     width: 60%;
+    padding: 10px;
 }
 
-.toggleRepliesBtn {
-    border-radius: 4px;
-    border: 1px solid;
+.repliesContainer 
+.replyBtn,
+.toggleRepliesBtn,
+.dots,
+.deleteComment{
+    margin-top: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    height: 1.8em;
+    font-size: small;
 }
 
-.toggleRepliesBtn:hover {
-    background-color: honeydew;
+.repliesContainer 
+.dots:hover,
+.replyBtn:hover,
+.toggleRepliesBtn:hover,
+.deleteComment:hover{
+    background-color: #0056b3;
 }
 
-.repliedcomments {
-    width: 70%;
-    background-color: rgb(144, 199, 201);
+#moreOptions{
+    height: 25px;
+    background-color:   #333;
+    color: whitesmoke;
+    border: none;
+    font-size: 20px;
+    padding-top: 0px;
+    text-align: center;
 }
 
-/* Media Queries */
+.deleteComment{
+    height: 25px;
+    width: 60px;
+    background-color: #333;
+    color: whitesmoke;
+    border: none;
+    border-radius: 10px;
+    display: none;
+}
+
+/* replyContainer style------------------------------------------------------------------------------------------------------------ */
+.replyContainer{
+    display: none; 
+    align-items: baseline;
+    border-radius: 4px;
+    padding: 10px; 
+    width: 100%; 
+    gap: 4px;
+}
+
+.replyInput { 
+    left: 30px;
+    width: 60%;
+    height: 2.5rem;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: inherit;
+    background-color:  rgb(67, 65, 65);
+    outline: none;
+    border: none;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    color: whitesmoke;
+}
+
+#replysubmitComment{
+    height: 25px;
+    width: 80px;
+    display: inline-block;
+    background-color: rgb(80, 210, 126);
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    opacity: 1;
+    text-align: center;
+    font-family: 'Arial', sans-serif; 
+    font: initial;
+    position: relative;
+    top: -20%;
+}
+
+
+
+
+
+
+
+
+
+
+/* Media Queries--------------------------------------------------------------------------------------------------------------------*/
 
 /* Tablet */
 @media (max-width: 768px) {
@@ -171,9 +235,8 @@ p {
         padding: 15px;
     }
 
-    .deletebtn,
     .repliesContainer .replyBtn,
-    .comment .toggleReplies {
+    .comment .toggleReplies  {
         width: 100%;
         padding: 10px;
     }
