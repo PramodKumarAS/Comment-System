@@ -3,7 +3,14 @@ document.addEventListener('DOMContentLoaded',(e)=>{
     const commentContainer  = document.querySelector('#commentsContainer');
     const submitBtn  = document.querySelector('#submitComment');
     const commentTxt  = document.querySelector('#commentInput');
-   
+    let _commentDataArray=[];
+
+    if(localStorage.getItem("comments")){
+        let comments = JSON.parse(localStorage.getItem("comments"));
+            comments.forEach((comment)=>{
+                addComment(comment.comment,comment.userId);
+            });
+    }
     //#region EVENT LISTENERS
 
     //EVENT 1:When User Mouse over on Comment button change the Comment button visibiliy(cursor,backgroundcolor,opacity)
@@ -26,7 +33,8 @@ document.addEventListener('DOMContentLoaded',(e)=>{
 
         if(comment){
 
-            addComment(comment);
+            const userId=Math.floor(1000 + Math.random() * 9000);
+            addComment(comment,userId);
 
             commentTxt.value="";
             submitBtn.style.backgroundColor  = commentTxt.value ? "rgb(80, 210, 37)":"";
@@ -45,6 +53,7 @@ document.addEventListener('DOMContentLoaded',(e)=>{
     
             if (replyInput.style.display === 'none' || !replyInput.style.display) {
                 replyInput.style.display = 'flex'; 
+                currElement.scrollIntoView({behavior:"smooth"})
             } else {
                 replyInput.style.display = 'none'; 
             }
@@ -61,7 +70,9 @@ document.addEventListener('DOMContentLoaded',(e)=>{
             const replyInput = parentEle.querySelector('.replyInput');
 
             if(replyInput.value){
-                replyComments(parentEle,replyInput.value);
+          
+                const userId=Math.floor(1000 + Math.random() * 9000);
+                replyComments(parentEle,replyInput.value,userId);
                 replyInput.value="";
             }
         }
@@ -107,19 +118,18 @@ document.addEventListener('DOMContentLoaded',(e)=>{
 //#endregion
 
     //#region FUNCTIONS
-    function addComment(comment){
+    function addComment(comment,userId){
         const commentElement=document.createElement('div');
         commentElement.classList.add('repliesContainer');
-
         commentElement.innerHTML = `        
                                     <div class="repliedcomments">
                                       <div class="userDetail">
                                         <img src="https://assets.leetcode.com/users/Pramod_18/avatar_1726803350.png" alt="">
-                                        <a>user_${Math.floor(1000 + Math.random() * 9000)}</a>
+                                        <a>user_${userId}</a>
                                       </div>
                                         <p>${comment}</p>                                                                               
                                     </div>
-                                    <button class="toggleRepliesBtn">Hide Comments</button>
+                                    <button class="toggleRepliesBtn">Hide Replies</button>
                                     <button class="replyBtn">Reply</button>
                                     <button class="dots" id="moreOptions">...</button>
                                     <button class="deleteComment">Delete</button>           
@@ -132,9 +142,14 @@ document.addEventListener('DOMContentLoaded',(e)=>{
                                  `;
 
         commentContainer.appendChild(commentElement);
+        commentElement.scrollIntoView({ behavior: "smooth" });
+      
+        _commentDataArray.push({userId,comment,replies:[]});
+        localStorage.setItem("comments",JSON.stringify(_commentDataArray))
     }
 
-    function replyComments(parentElement,comment){
+    function replyComments(parentElement,comment,userId){
+        
         const commentElement=document.createElement('div');
         commentElement.classList.add('repliesContainer');
 
@@ -142,13 +157,13 @@ document.addEventListener('DOMContentLoaded',(e)=>{
                                     <div class="repliedcomments">
                                       <div class="userDetail">
                                         <img src="https://assets.leetcode.com/users/Satansoft/avatar_1711147331.png" alt="">
-                                        <a>user_${Math.floor(1000 + Math.random() * 9000)}</a>
+                                        <a>user_${userId}</a>
                                       </div>
                                         <p>${comment}</p>
                                     </div>
                                 
                                     
-                                    <button class="toggleRepliesBtn">Hide Comments</button> 
+                                    <button class="toggleRepliesBtn">Hide Replies</button> 
                                     <button class="replyBtn">Reply</button>
                                     <button class="dots" id="moreOptions">...</button>
                                     <button class="deleteComment">Delete</button>          
@@ -159,6 +174,7 @@ document.addEventListener('DOMContentLoaded',(e)=>{
                                     </div>
                                  `;
         parentElement.appendChild(commentElement);
+        commentElement.scrollIntoView({ behavior: "smooth" });
     }
 
     function showReplies(parentEle) {
@@ -182,11 +198,14 @@ document.addEventListener('DOMContentLoaded',(e)=>{
             }
         });
     
-        toggleBtn.textContent = anyVisible ? 'Show Comments' : 'Hide Comments';
+        toggleBtn.textContent = anyVisible ? 'Show Replies' : 'Hide Replies';
     }      
 
     function removeComment(comment){
         comment.remove();
+
+            console.log((`userId: ${comment.userId}`))        
+            console.log(_commentDataArray.indexOf(`userId: ${_commentDataArray[0].userId}`))        
     }    
     //#endregion
 })

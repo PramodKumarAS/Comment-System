@@ -182,7 +182,10 @@ p {
     top: -20%;
 }
 
-
+a{
+    font-size: small;
+    font-weight: bolder;
+}
 
 
 
