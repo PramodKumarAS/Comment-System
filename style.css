@@ -200,6 +200,8 @@ a{
 @media (max-width: 768px) {
     #commentForm {
         width: 80%;
+        padding-bottom: 10px;
+
     }
 
     #commentForm textarea {
@@ -209,7 +211,7 @@ a{
     .repliesContainer {
         margin-left: 5%;
     }
-
+ 
     p {
         width: 80%;
     }
@@ -226,29 +228,30 @@ a{
     }
 
     #commentForm {
-        width: 100%;
+        width: 80%;
     }
 
     #commentForm textarea {
         width: 100%;
-    }
+    }  
 
-    #commentForm button {
-        width: 100%;
-        padding: 15px;
-    }
-
-    .repliesContainer .replyBtn,
+    .repliesContainer,
     .comment .toggleReplies  {
         width: 100%;
         padding: 10px;
     }
 
+    .replyBtn{
+        width: 50%;
+    }
     .repliesContainer {
         margin-left: 0;
         padding-left: 0;
     }
 
+    .toggleRepliesBtn{
+        width: 50%;
+    }
     p {
         width: 100%;
     }
