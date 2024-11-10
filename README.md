@@ -7,7 +7,6 @@ With the rapid growth of social media platforms, users are posting millions of p
 - **Commenting on the Post**: Users can share their thoughts or feedback on the original post.
 - **Replying to Comments**: Allows users to reply not only to the original comments but also to any nested replies, creating threaded conversations.
 - **Deleting Comments**: Users can delete their own comments, and the UI will handle updates to reflect the deletion smoothly.
-- **Liking and Disliking Comments**: Users can express their approval or disagreement with specific comments, providing feedback on individual statements.
 - **Showing/Hiding Replies**: To keep the UI clean and organized, users can expand or collapse replies under each comment as needed.
 - **Additional Functionalities**: Many more features can be added to enhance the commenting experience, including timestamps, comment editing, and moderation controls.
 
